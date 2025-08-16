@@ -47,7 +47,7 @@ public final class NMSHandlerFactory {
     /**
      * 현재 서버 버전에 맞는 NMSHandler 인스턴스를 로드
      */
-    public static NMSHandler loadNMS() {
+    public static EnchantmentInjector loadNMS() {
         String bukkitVersion = Bukkit.getBukkitVersion();
         NmsVersion nmsVersion = NmsVersion.fromBukkitVersion(bukkitVersion);
 
@@ -55,12 +55,12 @@ public final class NMSHandlerFactory {
             // 패키지 이름: V → v로만 변환, 나머지는 그대로
             String versionName = nmsVersion.name();
             String packageName = "v" + versionName.substring(1);
-            String className = "io.lumpq126.eclipsia.nms." + packageName + ".NMSHandler";
+            String className = "io.lumpq126.eclipsia.nms." + packageName + ".EnchantmentRegister";
 
             Class<?> clazz = Class.forName(className);
             Constructor<?> constructor = clazz.getDeclaredConstructor();
             constructor.setAccessible(true);
-            return (NMSHandler) constructor.newInstance();
+            return (EnchantmentInjector) constructor.newInstance();
         } catch (Exception e) {
             throw new RuntimeException("NMS 핸들러 로드 실패: " + nmsVersion.name(), e);
         }

@@ -1,17 +1,33 @@
 package io.lumpq126.enchantAPI;
 
-import io.lumpq126.enchantAPI.nms.NMSHandler;
+import io.lumpq126.enchantAPI.api.EnchantAPI;
+import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.nms.EnchantmentInjector;
 import io.lumpq126.enchantAPI.nms.NMSHandlerFactory;
-import io.lumpq126.enchantAPI.utilites.Mm;
+import io.lumpq126.enchantAPI.utilities.Log;
+import io.lumpq126.enchantAPI.utilities.Mm;
+import io.lumpq126.enchantAPI.utilities.manager.EnchantmentManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
 public final class EnchantAPIPlugin extends JavaPlugin {
-    private static NMSHandler nms;
+    private static EnchantmentInjector nms;
+    private EnchantmentManager enchantmentManager;
 
     @Override
     public void onEnable() {
+
+        enchantmentManager = new EnchantmentManager(this);
+        EnchantAPI.setInstance(enchantmentManager);
+
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            enchantmentManager.loadInjectedEnchantments();
+        }, 1L);
+
+        Log.init(this);
+        CustomEnchantment.init(this);
 
         try {
             nms = NMSHandlerFactory.loadNMS();
@@ -24,7 +40,7 @@ public final class EnchantAPIPlugin extends JavaPlugin {
         }
     }
 
-    public static NMSHandler getNms() {
+    public static EnchantmentInjector getNms() {
         return nms;
     }
 }

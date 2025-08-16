@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation(project(":api"))
+    implementation("com.google.guava:guava:32.1.3-jre")
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
 }
 
