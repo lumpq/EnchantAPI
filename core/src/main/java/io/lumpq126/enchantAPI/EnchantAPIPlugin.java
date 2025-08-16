@@ -1,6 +1,5 @@
 package io.lumpq126.enchantAPI;
 
-import io.lumpq126.enchantAPI.listeners.EnchantmentLoadListener;
 import io.lumpq126.enchantAPI.utilities.Log;
 import io.lumpq126.enchantAPI.v1_20_R3.api.EnchantAPI_v1_20_R3;
 import io.lumpq126.enchantAPI.v1_20_R3.enchantment.CustomEnchantment_v1_20_R3;
@@ -24,7 +23,6 @@ public final class EnchantAPIPlugin extends JavaPlugin {
         instance = this;
 
         Log.init(this);
-        getServer().getPluginManager().registerEvents(new EnchantmentLoadListener(), this);
     }
 
     // 이 메서드를 추가하여 다른 클래스에서 EnchantmentManager에 접근할 수 있도록 합니다.
@@ -52,5 +50,9 @@ public final class EnchantAPIPlugin extends JavaPlugin {
 
         enchantmentManager_v1_21_R5 = new EnchantmentManager_v1_21_R5(this);
         EnchantAPI_v1_21_R5.setInstance(enchantmentManager_v1_21_R5);
+
+        enchantmentManager_v1_20_R3.loadInjectedEnchantments();
+        enchantmentManager_v1_21_R3.loadInjectedEnchantments();
+        enchantmentManager_v1_21_R5.loadInjectedEnchantments();
     }
 }
