@@ -12,18 +12,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class EnchantmentManager_v1_20_R3 extends EnchantAPI_v1_20_R3 {
 
-    private final JavaPlugin plugin; // static 제거
-    private final EnchantmentInjector_v1_20_R3 injector; // static 제거
+    private final JavaPlugin plugin;
+    private final EnchantmentInjector_v1_20_R3 injector;
     private static final Map<NamespacedKey, CustomEnchantment_v1_20_R3> customEnchantments = new ConcurrentHashMap<>();
 
     public EnchantmentManager_v1_20_R3(JavaPlugin plugin) {
         this.plugin = plugin;
-        String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
+
         try {
-            Class<?> injectorClass = Class.forName("io.lumpq126.enchantAPI.nms." + version + ".EnchantmentRegister");
+            Class<?> injectorClass = Class.forName("io.lumpq126.enchantAPI.nms.v1_20_R3.EnchantmentRegister");
             this.injector = (EnchantmentInjector_v1_20_R3) injectorClass.getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("NMS EnchantmentRegister 클래스를 찾을 수 없습니다: v1_20_R3", e);
         } catch (Exception e) {
-            throw new RuntimeException("NMS 모듈을 로드할 수 없습니다: " + version, e);
+            throw new RuntimeException("NMS EnchantmentRegister 인스턴스를 생성할 수 없습니다: v1_20_R3", e);
         }
     }
 
@@ -39,7 +41,6 @@ public class EnchantmentManager_v1_20_R3 extends EnchantAPI_v1_20_R3 {
         }
     }
 
-    // 추가된 메서드
     public static void addEnchant(ItemStack item, NamespacedKey key, int level) {
         CustomEnchantment_v1_20_R3 enchantment = customEnchantments.get(key);
         if (enchantment != null) {

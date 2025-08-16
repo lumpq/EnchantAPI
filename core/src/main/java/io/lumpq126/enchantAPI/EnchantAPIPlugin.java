@@ -20,22 +20,45 @@ public final class EnchantAPIPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
-        enchantmentManager_v1_20_R3 = new EnchantmentManager_v1_20_R3(this);
-        EnchantAPI_v1_20_R3.setInstance(enchantmentManager_v1_20_R3);
-        Bukkit.getScheduler().runTaskLater(this, () -> enchantmentManager_v1_20_R3.loadInjectedEnchantments(), 1L);
-
-        enchantmentManager_v1_21_R3 = new EnchantmentManager_v1_21_R3(this);
-        EnchantAPI_v1_21_R3.setInstance(enchantmentManager_v1_21_R3);
-        Bukkit.getScheduler().runTaskLater(this, () -> enchantmentManager_v1_21_R3.loadInjectedEnchantments(), 1L);
-
-        enchantmentManager_v1_21_R4 = new EnchantmentManager_v1_21_R5(this);
-        EnchantAPI_v1_21_R5.setInstance(enchantmentManager_v1_21_R4);
-        Bukkit.getScheduler().runTaskLater(this, () -> enchantmentManager_v1_21_R4.loadInjectedEnchantments(), 1L);
-
         Log.init(this);
+
+        // 1. 버전별 CustomEnchantment 초기화
         CustomEnchantment_v1_20_R3.init(this);
         CustomEnchantment_v1_21_R3.init(this);
         CustomEnchantment_v1_21_R5.init(this);
+
+        // 2. 버전별 EnchantmentManager 생성 + 싱글톤 등록
+        enchantmentManager_v1_20_R3 = new EnchantmentManager_v1_20_R3(this);
+        EnchantAPI_v1_20_R3.setInstance(enchantmentManager_v1_20_R3);
+
+        enchantmentManager_v1_21_R3 = new EnchantmentManager_v1_21_R3(this);
+        EnchantAPI_v1_21_R3.setInstance(enchantmentManager_v1_21_R3);
+
+        enchantmentManager_v1_21_R4 = new EnchantmentManager_v1_21_R5(this);
+        EnchantAPI_v1_21_R5.setInstance(enchantmentManager_v1_21_R4);
+
+        // 3. 서버가 레지스트리 준비 후 주입하도록 스케줄러 딜레이
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            try {
+                enchantmentManager_v1_20_R3.loadInjectedEnchantments();
+            } catch (Exception e) {
+                getLogger().severe("Failed to inject v1_20_R3 enchantments");
+                Log.log("error", "", e);
+            }
+
+            try {
+                enchantmentManager_v1_21_R3.loadInjectedEnchantments();
+            } catch (Exception e) {
+                getLogger().severe("Failed to inject v1_21_R3 enchantments");
+                Log.log("error", "", e);
+            }
+
+            try {
+                enchantmentManager_v1_21_R4.loadInjectedEnchantments();
+            } catch (Exception e) {
+                getLogger().severe("Failed to inject v1_21_R5 enchantments");
+                Log.log("error", "", e);
+            }
+        }, 1L);
     }
 }
