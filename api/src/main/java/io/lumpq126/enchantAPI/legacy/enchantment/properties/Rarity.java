@@ -1,4 +1,4 @@
-package io.lumpq126.enchantAPI.enchantment.properties;
+package io.lumpq126.enchantAPI.legacy.enchantment.properties;
 
 /**
  * 커스텀 인챈트의 희귀도를 나타냅니다.

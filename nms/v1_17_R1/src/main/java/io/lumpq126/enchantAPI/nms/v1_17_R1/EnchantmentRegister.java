@@ -1,8 +1,8 @@
 package io.lumpq126.enchantAPI.nms.v1_17_R1;
 
-import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
-import io.lumpq126.enchantAPI.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyCustomEnchantment;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyEnchantmentInjector;
+import io.lumpq126.enchantAPI.legacy.enchantment.properties.Rarity;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -19,13 +19,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class EnchantmentRegister implements EnchantmentInjector {
+public class EnchantmentRegister implements LegacyEnchantmentInjector {
 
     private static class NMSCustomEnchantment extends Enchantment {
-        private final CustomEnchantment wrapper;
+        private final LegacyCustomEnchantment wrapper;
         private final NamespacedKey key;
 
-        protected NMSCustomEnchantment(CustomEnchantment wrapper, NamespacedKey key) {
+        protected NMSCustomEnchantment(LegacyCustomEnchantment wrapper, NamespacedKey key) {
             // 이제 wrapper에서 값을 가져와 동적으로 처리합니다.
             super(convertRarity(wrapper.getRarity()),
                     convertTarget(wrapper.getEnchantmentTarget()),
@@ -86,7 +86,7 @@ public class EnchantmentRegister implements EnchantmentInjector {
     }
 
     @Override
-    public void inject(CustomEnchantment enchantment) {
+    public void inject(LegacyCustomEnchantment enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
             ResourceLocation nmsId = new ResourceLocation(bukkitKey.getNamespace(), bukkitKey.getKey());

@@ -1,4 +1,4 @@
-package io.lumpq126.enchantAPI.enchantment;
+package io.lumpq126.enchantAPI.renew.enchantment;
 
 public interface EnchantmentInjector {
     /**

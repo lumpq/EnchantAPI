@@ -1,11 +1,11 @@
 package io.lumpq126.enchantAPI.nms.v1_21_R3;
 
-import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyCustomEnchantment;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyEnchantmentInjector;
 
-public class EnchantmentRegister implements EnchantmentInjector {
+public class EnchantmentRegister implements LegacyEnchantmentInjector {
 
     @Override
-    public void inject(CustomEnchantment enchantment) {
+    public void inject(LegacyCustomEnchantment enchantment) {
     }
 }

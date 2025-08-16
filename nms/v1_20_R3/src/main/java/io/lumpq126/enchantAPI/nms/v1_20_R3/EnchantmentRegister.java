@@ -1,8 +1,8 @@
 package io.lumpq126.enchantAPI.nms.v1_20_R3;
 
-import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
-import io.lumpq126.enchantAPI.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyCustomEnchantment;
+import io.lumpq126.enchantAPI.legacy.enchantment.LegacyEnchantmentInjector;
+import io.lumpq126.enchantAPI.legacy.enchantment.properties.Rarity;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -20,13 +20,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnchantmentRegister implements EnchantmentInjector {
+public class EnchantmentRegister implements LegacyEnchantmentInjector {
 
     private static class NMSCustomEnchantment extends Enchantment {
-        private final CustomEnchantment wrapper;
+        private final LegacyCustomEnchantment wrapper;
         private final NamespacedKey key;
 
-        protected NMSCustomEnchantment(CustomEnchantment wrapper, NamespacedKey key) {
+        protected NMSCustomEnchantment(LegacyCustomEnchantment wrapper, NamespacedKey key) {
             super(convertRarity(wrapper.getRarity()),
                     convertTarget(wrapper.getEnchantmentTarget()),
                     convertSlots(wrapper.getApplicableSlots()));
@@ -88,7 +88,7 @@ public class EnchantmentRegister implements EnchantmentInjector {
 
     @Override
     @SuppressWarnings("unchecked") // unchecked cast 경고 억제
-    public void inject(CustomEnchantment enchantment) {
+    public void inject(LegacyCustomEnchantment enchantment) {
         try {
             // 1. NMS 인스턴스 생성
             NamespacedKey bukkitKey = enchantment.getKey();

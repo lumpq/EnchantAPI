@@ -1,6 +1,6 @@
-package io.lumpq126.enchantAPI.api;
+package io.lumpq126.enchantAPI.renew.api;
 
-import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.renew.enchantment.CustomEnchantment;
 
 public class EnchantAPI {
     private static EnchantAPI instance;
