@@ -87,3 +87,12 @@ tasks {
 
     compileJava.get().dependsOn(clean)
 }
+
+val serverPluginsDir = file("C:/Users/user/Desktop/.server/plugins")
+tasks.register<Copy>("copyJarToServer") {
+    dependsOn(tasks.shadowJar)
+    from(tasks.shadowJar.get().archiveFile)
+    into(serverPluginsDir)
+    rename { "Eclipsia-$pluginVersion.jar" }
+}
+tasks.build { dependsOn("copyJarToServer") }
