@@ -1,6 +1,4 @@
-package io.lumpq126.enchantAPI.nms;
-
-import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
+package io.lumpq126.enchantAPI.enchantment;
 
 public interface EnchantmentInjector {
     /**

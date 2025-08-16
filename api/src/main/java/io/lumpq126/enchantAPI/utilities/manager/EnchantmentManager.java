@@ -2,7 +2,7 @@ package io.lumpq126.enchantAPI.utilities.manager;
 
 import io.lumpq126.enchantAPI.api.EnchantAPI;
 import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.nms.EnchantmentInjector;
+import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
@@ -18,7 +18,7 @@ public class EnchantmentManager extends EnchantAPI {
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             // NMS 버전별 EnchantmentInjector 클래스 동적 로딩
-            Class<?> injectorClass = Class.forName("io.lumpq126.enchantapi.nms." + version + ".EnchantmentRegister");
+            Class<?> injectorClass = Class.forName("io.lumpq126.enchantAPI.nms." + version + ".EnchantmentRegister");
             this.injector = (EnchantmentInjector) injectorClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("NMS 모듈을 로드할 수 없습니다: " + version, e);

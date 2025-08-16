@@ -12,30 +12,24 @@ public abstract class CustomEnchantment {
     protected final int anvilCost;
     protected final boolean isTreasure;
     protected final boolean isCursed;
-    protected final boolean canEnchant;
     protected final boolean canTrade;
-    //protected final EnchantmentRarity rarity;
+    protected final boolean isDiscoverable; // 추가됨
 
-    /**
-     * 로그 유틸리티 초기화
-     *
-     * @param instance 플러그인 인스턴스
-     */
     public static void init(JavaPlugin instance) {
         plugin = instance;
     }
 
     public CustomEnchantment(String id, String name,
                              int maxLevel, int anvilCost,
-                             boolean isTreasure, boolean isCursed, boolean canEnchant, boolean canTrade) {
+                             boolean isTreasure, boolean isCursed, boolean canTrade, boolean isDiscoverable) {
         this.key = new NamespacedKey(plugin, id);
         this.name = name;
         this.maxLevel = maxLevel;
         this.anvilCost = anvilCost;
         this.isTreasure = isTreasure;
         this.isCursed = isCursed;
-        this.canEnchant = canEnchant;
         this.canTrade = canTrade;
+        this.isDiscoverable = isDiscoverable; // 추가됨
     }
 
     public abstract void onEnchant(ItemStack item, int level);
@@ -68,5 +62,9 @@ public abstract class CustomEnchantment {
 
     public boolean canTrade() {
         return canTrade;
+    }
+
+    public boolean isDiscoverable() {
+        return isDiscoverable;
     }
 }
