@@ -11,9 +11,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EnchantmentManager_v1_20_R3 extends EnchantAPI_v1_20_R3 {
-    private final JavaPlugin plugin;
-    private final Map<NamespacedKey, CustomEnchantment_v1_20_R3> customEnchantments = new ConcurrentHashMap<>();
-    private final EnchantmentInjector_v1_20_R3 injector;
+
+    private final JavaPlugin plugin; // static 제거
+    private final EnchantmentInjector_v1_20_R3 injector; // static 제거
+    private static final Map<NamespacedKey, CustomEnchantment_v1_20_R3> customEnchantments = new ConcurrentHashMap<>();
 
     public EnchantmentManager_v1_20_R3(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -39,14 +40,14 @@ public class EnchantmentManager_v1_20_R3 extends EnchantAPI_v1_20_R3 {
     }
 
     // 추가된 메서드
-    public void addEnchant(ItemStack item, NamespacedKey key, int level) {
+    public static void addEnchant(ItemStack item, NamespacedKey key, int level) {
         CustomEnchantment_v1_20_R3 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
             enchantment.addEnchant(item, level);
         }
     }
 
-    public void removeEnchant(ItemStack item, NamespacedKey key) {
+    public static void removeEnchant(ItemStack item, NamespacedKey key) {
         CustomEnchantment_v1_20_R3 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
             enchantment.removeEnchant(item);
