@@ -2,6 +2,7 @@ package io.lumpq126.enchantAPI.nms.v1_21_R5;
 
 import io.lumpq126.enchantAPI.v1_21_R5.enchantment.CustomEnchantment_v1_21_R5;
 import io.lumpq126.enchantAPI.utilities.Log;
+import io.lumpq126.enchantAPI.v1_21_R5.enchantment.EnchantmentInjector_v1_21_R5;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,8 +19,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchantmentRegister {
+public class EnchantmentRegister implements EnchantmentInjector_v1_21_R5 {
 
+    @Override
     public void inject(CustomEnchantment_v1_21_R5 enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
