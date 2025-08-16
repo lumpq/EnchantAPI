@@ -24,14 +24,20 @@ public class EnchantmentRegister {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
 
-            // NMS ResourceLocation
+            // NMS ResourceLocation (엔챈트 ID)
             ResourceLocation nmsId = ResourceLocation.fromNamespaceAndPath(
                     bukkitKey.getNamespace(),
                     bukkitKey.getKey()
             );
 
-            // v1_21_R4: enchantmentTarget 삭제됨 → CustomEnchantment에 직접 지정된 TagKey<Item> 사용
-            TagKey<Item> supportedTag = enchantment.getTargetTag();
+            // ✅ API에서 받아온 targetTagKey (Bukkit NamespacedKey) → NMS 변환
+            NamespacedKey tagKey = enchantment.getTargetTagKey();
+            ResourceLocation tagLocation = ResourceLocation.fromNamespaceAndPath(
+                    tagKey.getNamespace(),
+                    tagKey.getKey()
+            );
+            TagKey<Item> supportedTag = TagKey.create(Registries.ITEM, tagLocation);
+
             HolderSet<Item> supportedItems = BuiltInRegistries.ITEM.getOrThrow(supportedTag);
 
             // 비용 정의
@@ -59,11 +65,10 @@ public class EnchantmentRegister {
             );
             Enchantment nmsEnchant = Enchantment.enchantment(definition).build(nmsId);
 
-            // v1_21_R4: 정적 레지스트리 접근
+            // 정적 레지스트리 접근 후 등록
             Registry<Enchantment> enchantRegistry =
                     RegistryLayer.STATIC_ACCESS.lookupOrThrow(Registries.ENCHANTMENT);
 
-            // 등록
             Registry.register(enchantRegistry, nmsId, nmsEnchant);
 
             Log.log("info", "Custom enchantment injected: " + bukkitKey.getKey(), null);

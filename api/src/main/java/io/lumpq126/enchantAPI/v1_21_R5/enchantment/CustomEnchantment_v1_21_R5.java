@@ -1,8 +1,6 @@
 package io.lumpq126.enchantAPI.v1_21_R5.enchantment;
 
 import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -10,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * 커스텀 인챈트 정의 클래스.
- * NMS EnchantmentDefinition의 속성들을 전부 커스터마이징 가능하게 제공합니다.
+ * NMS 의존성 없는 API 전용 클래스
  */
 public abstract class CustomEnchantment_v1_21_R5 {
     private static JavaPlugin plugin;
@@ -29,9 +27,9 @@ public abstract class CustomEnchantment_v1_21_R5 {
     protected final boolean canTrade;
     protected final boolean isDiscoverable;
 
-    // NMS 전용 속성
+    // NMS 전용 속성 대신 → Bukkit Key 로만 저장
     protected final Rarity_v1_20_R3 rarity;
-    protected final TagKey<Item> targetTag;
+    protected final NamespacedKey targetTagKey;
     protected final EquipmentSlot[] applicableSlots;
 
     // 비용 커스터마이징
@@ -50,7 +48,7 @@ public abstract class CustomEnchantment_v1_21_R5 {
                                       int anvilCost,
                                       int weight,
                                       Rarity_v1_20_R3 rarity,
-                                      TagKey<Item> targetTag,                  // ✅ 교체
+                                      NamespacedKey targetTagKey,
                                       EquipmentSlot[] applicableSlots,
                                       boolean isTreasure,
                                       boolean isCursed,
@@ -68,7 +66,7 @@ public abstract class CustomEnchantment_v1_21_R5 {
         this.weight = weight;
 
         this.rarity = rarity;
-        this.targetTag = targetTag;
+        this.targetTagKey = targetTagKey;
         this.applicableSlots = applicableSlots;
 
         this.isTreasure = isTreasure;
@@ -82,12 +80,12 @@ public abstract class CustomEnchantment_v1_21_R5 {
         this.maxCostPerLevel = maxCostPerLevel;
     }
 
-    // 추상 메서드 (각 엔챈트마다 구현)
+    // 추상 메서드
     public abstract void onEnchant(ItemStack item, int level);
     public abstract void onUnenchant(ItemStack item);
     public abstract boolean canEnchant(ItemStack item);
 
-    // 게터들
+    // 게터
     public NamespacedKey getKey() { return key; }
     public String getName() { return name; }
 
@@ -96,7 +94,7 @@ public abstract class CustomEnchantment_v1_21_R5 {
     public int getWeight() { return weight; }
 
     public Rarity_v1_20_R3 getRarity() { return rarity; }
-    public TagKey<Item> getTargetTag() { return targetTag; }
+    public NamespacedKey getTargetTagKey() { return targetTagKey; }
     public EquipmentSlot[] getApplicableSlots() { return applicableSlots; }
 
     public boolean isTreasure() { return isTreasure; }
