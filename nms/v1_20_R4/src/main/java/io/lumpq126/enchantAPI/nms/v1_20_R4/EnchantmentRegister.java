@@ -17,10 +17,8 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
 
@@ -29,13 +27,13 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
         private final NamespacedKey key;
 
         protected NMSCustomEnchantment(CustomEnchantment_v1_21_R3 wrapper, NamespacedKey key) {
-            super(new EnchantmentDefinition(
+            super(new Enchantment.EnchantmentDefinition(
                     convertTargetToItemTag(wrapper.getEnchantmentTarget()),
-                    java.util.Optional.empty(),
+                    Optional.empty(),
                     wrapper.getWeight(),
                     wrapper.getMaxLevel(),
-                    new Cost(wrapper.getMinCostBase(), wrapper.getMinCostPerLevel()),
-                    new Cost(wrapper.getMaxCostBase(), wrapper.getMaxCostPerLevel()),
+                    new Enchantment.Cost(wrapper.getMinCostBase(), wrapper.getMinCostPerLevel()),
+                    new Enchantment.Cost(wrapper.getMaxCostBase(), wrapper.getMaxCostPerLevel()),
                     wrapper.getAnvilCost(),
                     net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS,
                     convertSlots(wrapper.getApplicableSlots())
@@ -46,22 +44,22 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
 
         @Override
         public boolean isTreasureOnly() {
-            return wrapper.isTreasure();
+            return this.wrapper.isTreasure();
         }
 
         @Override
         public boolean isCurse() {
-            return wrapper.isCursed();
+            return this.wrapper.isCursed();
         }
 
         @Override
         public boolean isTradeable() {
-            return wrapper.canTrade();
+            return this.wrapper.canTrade();
         }
 
         @Override
         public boolean isDiscoverable() {
-            return wrapper.isDiscoverable();
+            return this.wrapper.isDiscoverable();
         }
 
         @Override
@@ -76,7 +74,6 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void inject(CustomEnchantment_v1_21_R3 enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
@@ -84,15 +81,9 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
 
             NMSCustomEnchantment nmsEnchantment = new NMSCustomEnchantment(enchantment, bukkitKey);
 
+            // BuiltInRegistries.ENCHANTMENT에 직접 등록하는 방식으로 변경
+            // 이는 Reflection을 사용하는 기존 코드보다 안전하고 NMS 버전 변화에 강함
             net.minecraft.core.Registry.register(BuiltInRegistries.ENCHANTMENT, nmsId, nmsEnchantment);
-
-            Field field = BuiltInRegistries.ENCHANTMENT.getClass().getDeclaredField("byKey");
-            field.setAccessible(true);
-
-            Map<ResourceLocation, Enchantment> byKey =
-                    (Map<ResourceLocation, Enchantment>) Objects.requireNonNull(field.get(BuiltInRegistries.ENCHANTMENT));
-
-            byKey.put(nmsId, nmsEnchantment);
 
             Log.log("info", "Custom enchantment injected: " + bukkitKey.getKey(), null);
 
