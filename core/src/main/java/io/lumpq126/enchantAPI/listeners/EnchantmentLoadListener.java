@@ -25,7 +25,7 @@ public class EnchantmentLoadListener implements Listener {
         }
 
         try {
-            EnchantAPIPlugin.getInstance().getEnchantmentManager_v1_21_R4().loadInjectedEnchantments();
+            EnchantAPIPlugin.getInstance().getEnchantmentManager_v1_21_R5().loadInjectedEnchantments();
         } catch (Exception e) {
             EnchantAPIPlugin.getInstance().getLogger().severe("Failed to inject v1_21_R5 enchantments");
             Log.log("error", "", e);

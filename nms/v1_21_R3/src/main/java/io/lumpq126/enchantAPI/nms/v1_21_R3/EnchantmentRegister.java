@@ -17,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.plugin.java.JavaPlugin;
+// ★ 버전에 맞게
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +29,17 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
 
-            // NMS ResourceLocation
+            // NMS id
             ResourceLocation nmsId = ResourceLocation.fromNamespaceAndPath(
                     bukkitKey.getNamespace(),
                     bukkitKey.getKey()
             );
 
-            // v1_21_R2: 태그 접근은 getOrThrow 사용
+            // 지원 아이템 태그 -> HolderSet
             TagKey<Item> supportedTag = convertTargetToItemTag(enchantment.getEnchantmentTarget());
             HolderSet<Item> supportedItems = BuiltInRegistries.ITEM.getOrThrow(supportedTag);
 
-            // 비용 정의
+            // 비용
             Enchantment.Cost minCost = new Enchantment.Cost(
                     enchantment.getMinCostBase(),
                     enchantment.getMinCostPerLevel()
@@ -48,10 +49,10 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
                     enchantment.getMaxCostPerLevel()
             );
 
-            // 슬롯 그룹
+            // 슬롯
             EquipmentSlotGroup[] slotGroups = convertSlots(enchantment.getApplicableSlots());
 
-            // 정의 + 인스턴스 생성
+            // 정의 + 인스턴스
             Enchantment.EnchantmentDefinition definition = Enchantment.definition(
                     supportedItems,
                     enchantment.getWeight(),
@@ -63,15 +64,20 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
             );
             Enchantment nmsEnchant = Enchantment.enchantment(definition).build(nmsId);
 
-            // v1_21_R2: 정적 레지스트리 접근은 lookupOrThrow 사용
-            Registry<Enchantment> enchantRegistry =
-                    RegistryLayer.STATIC_ACCESS.lookupOrThrow(Registries.ENCHANTMENT);
+            // ★★★ 핵심: 서버의 reloadable RegistryAccess에서 ENCHANTMENT 레지스트리 꺼내기
+            Registry<Enchantment> enchantRegistry = RegistryLayer.STATIC_ACCESS.lookupOrThrow(Registries.ENCHANTMENT);
 
             // 등록
             Registry.register(enchantRegistry, nmsId, nmsEnchant);
 
             Log.log("info", "Custom enchantment injected: " + bukkitKey.getKey(), null);
 
+        } catch (IllegalStateException frozen) {
+            // 레지스트리가 이미 freeze 된 경우 여기로 옴
+            JavaPlugin.getProvidingPlugin(this.getClass()).getLogger().severe(
+                    "[EnchantAPI] Registry frozen while injecting '" + enchantment.getKey().getKey() + "'. " +
+                            "인젝션 타이밍을 onLoad() 또는 (Paper면) RegistryFreeze/리소스 리로드 이전으로 옮기세요."
+            );
         } catch (Exception e) {
             JavaPlugin.getProvidingPlugin(this.getClass()).getLogger().severe(
                     "Failed to inject custom enchantment: " + enchantment.getKey().getKey()
@@ -80,9 +86,6 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
         }
     }
 
-    /**
-     * Bukkit 슬롯들을 NMS EquipmentSlotGroup으로 매핑합니다.
-     */
     private static EquipmentSlotGroup[] convertSlots(org.bukkit.inventory.EquipmentSlot[] slots) {
         if (slots == null || slots.length == 0) {
             return new EquipmentSlotGroup[]{ EquipmentSlotGroup.ANY };
@@ -95,7 +98,7 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
             switch (s) {
                 case HAND, OFF_HAND -> anyHand = true;
                 case HEAD, CHEST, LEGS, FEET -> anyArmor = true;
-                default -> { /* ignore */ }
+                default -> {}
             }
         }
 
@@ -107,9 +110,6 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
         return groups.toArray(new EquipmentSlotGroup[0]);
     }
 
-    /**
-     * Bukkit EnchantmentTarget → NMS Item Tag 변환
-     */
     private static TagKey<Item> convertTargetToItemTag(EnchantmentTarget target) {
         return switch (target) {
             case ARMOR -> ItemTags.ARMOR_ENCHANTABLE;

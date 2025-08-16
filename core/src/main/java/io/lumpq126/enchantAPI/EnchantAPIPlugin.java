@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class EnchantAPIPlugin extends JavaPlugin {
     private EnchantmentManager_v1_20_R3 enchantmentManager_v1_20_R3;
     private EnchantmentManager_v1_21_R3 enchantmentManager_v1_21_R3;
-    private EnchantmentManager_v1_21_R5 enchantmentManager_v1_21_R4;
+    private EnchantmentManager_v1_21_R5 enchantmentManager_v1_21_R5;
     private static EnchantAPIPlugin instance;
 
     @Override
@@ -24,7 +24,20 @@ public final class EnchantAPIPlugin extends JavaPlugin {
         instance = this;
 
         Log.init(this);
+        getServer().getPluginManager().registerEvents(new EnchantmentLoadListener(), this);
+    }
 
+    // 이 메서드를 추가하여 다른 클래스에서 EnchantmentManager에 접근할 수 있도록 합니다.
+    public EnchantmentManager_v1_20_R3 getEnchantmentManager_v1_20_R3() { return enchantmentManager_v1_20_R3; }
+    public EnchantmentManager_v1_21_R3 getEnchantmentManager_v1_21_R3() { return enchantmentManager_v1_21_R3; }
+    public EnchantmentManager_v1_21_R5 getEnchantmentManager_v1_21_R5() { return enchantmentManager_v1_21_R5; }
+
+    public static EnchantAPIPlugin getInstance() {
+        return instance;
+    }
+
+    @Override
+    public void onLoad() {
         // 1. 버전별 CustomEnchantment 초기화
         CustomEnchantment_v1_20_R3.init(this);
         CustomEnchantment_v1_21_R3.init(this);
@@ -37,20 +50,7 @@ public final class EnchantAPIPlugin extends JavaPlugin {
         enchantmentManager_v1_21_R3 = new EnchantmentManager_v1_21_R3(this);
         EnchantAPI_v1_21_R3.setInstance(enchantmentManager_v1_21_R3);
 
-        enchantmentManager_v1_21_R4 = new EnchantmentManager_v1_21_R5(this);
-        EnchantAPI_v1_21_R5.setInstance(enchantmentManager_v1_21_R4);
-
-        // 3. 서버 로드 이벤트를 기다리는 리스너 등록
-        // 이 시점에는 아직 레지스트리가 완전히 로드되지 않았으므로, 딜레이 스케줄러를 제거합니다.
-        getServer().getPluginManager().registerEvents(new EnchantmentLoadListener(), this);
-    }
-
-    // 이 메서드를 추가하여 다른 클래스에서 EnchantmentManager에 접근할 수 있도록 합니다.
-    public EnchantmentManager_v1_20_R3 getEnchantmentManager_v1_20_R3() { return enchantmentManager_v1_20_R3; }
-    public EnchantmentManager_v1_21_R3 getEnchantmentManager_v1_21_R3() { return enchantmentManager_v1_21_R3; }
-    public EnchantmentManager_v1_21_R5 getEnchantmentManager_v1_21_R4() { return enchantmentManager_v1_21_R4; }
-
-    public static EnchantAPIPlugin getInstance() {
-        return instance;
+        enchantmentManager_v1_21_R5 = new EnchantmentManager_v1_21_R5(this);
+        EnchantAPI_v1_21_R5.setInstance(enchantmentManager_v1_21_R5);
     }
 }
