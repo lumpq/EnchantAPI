@@ -3,6 +3,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.github.goooler.shadow") version "8.1.8"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.18" apply false
+    `maven-publish`
 }
 
 group = "io.lumpq126"
@@ -86,4 +87,25 @@ tasks {
     }
 
     compileJava.get().dependsOn(clean)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("gpr") {
+            groupId = "io.lumpq126"
+            artifactId = "api"
+            version = "1.0.0"
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/lumpq/EnchantAPI")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }

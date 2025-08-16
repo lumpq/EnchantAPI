@@ -1,19 +1,19 @@
 package io.lumpq126.enchantAPI.utilities.manager;
 
-import io.lumpq126.enchantAPI.EnchantAPIPlugin;
 import io.lumpq126.enchantAPI.api.EnchantAPI;
 import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
 import io.lumpq126.enchantAPI.nms.EnchantmentInjector;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class EnchantmentManager extends EnchantAPI {
-    private final EnchantAPIPlugin plugin;
+    private final JavaPlugin plugin;
     private final Set<CustomEnchantment> customEnchantments = new HashSet<>();
     private final EnchantmentInjector injector;
 
-    public EnchantmentManager(EnchantAPIPlugin plugin) {
+    public EnchantmentManager(JavaPlugin plugin) {
         this.plugin = plugin;
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
