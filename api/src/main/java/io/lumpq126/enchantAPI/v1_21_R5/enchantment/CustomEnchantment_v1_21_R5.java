@@ -28,7 +28,6 @@ public abstract class CustomEnchantment_v1_21_R5 {
     protected final boolean isDiscoverable;
 
     // NMS 전용 속성 대신 → Bukkit Key 로만 저장
-    protected final Rarity_v1_20_R3 rarity;
     protected final NamespacedKey targetTagKey;
     protected final EquipmentSlot[] applicableSlots;
 
@@ -47,7 +46,6 @@ public abstract class CustomEnchantment_v1_21_R5 {
                                       int maxLevel,
                                       int anvilCost,
                                       int weight,
-                                      Rarity_v1_20_R3 rarity,
                                       NamespacedKey targetTagKey,
                                       EquipmentSlot[] applicableSlots,
                                       boolean isTreasure,
@@ -65,7 +63,6 @@ public abstract class CustomEnchantment_v1_21_R5 {
         this.anvilCost = anvilCost;
         this.weight = weight;
 
-        this.rarity = rarity;
         this.targetTagKey = targetTagKey;
         this.applicableSlots = applicableSlots;
 
@@ -93,7 +90,6 @@ public abstract class CustomEnchantment_v1_21_R5 {
     public int getAnvilCost() { return anvilCost; }
     public int getWeight() { return weight; }
 
-    public Rarity_v1_20_R3 getRarity() { return rarity; }
     public NamespacedKey getTargetTagKey() { return targetTagKey; }
     public EquipmentSlot[] getApplicableSlots() { return applicableSlots; }
 

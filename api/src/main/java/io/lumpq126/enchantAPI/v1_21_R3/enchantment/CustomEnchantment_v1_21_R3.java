@@ -1,6 +1,5 @@
 package io.lumpq126.enchantAPI.v1_21_R3.enchantment;
 
-import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;
@@ -29,7 +28,6 @@ public abstract class CustomEnchantment_v1_21_R3 {
     protected final boolean isDiscoverable;
 
     // Bukkit / API 전용 속성
-    protected final Rarity_v1_20_R3 rarity;
     protected final EnchantmentTarget enchantmentTarget;
     protected final EquipmentSlot[] applicableSlots;
 
@@ -48,7 +46,6 @@ public abstract class CustomEnchantment_v1_21_R3 {
                                       int maxLevel,
                                       int anvilCost,
                                       int weight,
-                                      Rarity_v1_20_R3 rarity,
                                       EnchantmentTarget enchantmentTarget,
                                       EquipmentSlot[] applicableSlots,
                                       boolean isTreasure,
@@ -66,7 +63,6 @@ public abstract class CustomEnchantment_v1_21_R3 {
         this.anvilCost = anvilCost;
         this.weight = weight;
 
-        this.rarity = rarity;
         this.enchantmentTarget = enchantmentTarget;
         this.applicableSlots = applicableSlots;
 
@@ -94,7 +90,6 @@ public abstract class CustomEnchantment_v1_21_R3 {
     public int getAnvilCost() { return anvilCost; }
     public int getWeight() { return weight; }
 
-    public Rarity_v1_20_R3 getRarity() { return rarity; }
     public EnchantmentTarget getEnchantmentTarget() { return enchantmentTarget; }
     public EquipmentSlot[] getApplicableSlots() { return applicableSlots; }
 
