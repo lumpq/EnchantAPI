@@ -1,8 +1,8 @@
 package io.lumpq126.enchantAPI.nms.v1_19_R3;
 
-import io.lumpq126.enchantAPI.legacy.enchantment.LegacyCustomEnchantment;
-import io.lumpq126.enchantAPI.legacy.enchantment.LegacyEnchantmentInjector;
-import io.lumpq126.enchantAPI.legacy.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.v1_20_R3.enchantment.CustomEnchantment_v1_20_R3;
+import io.lumpq126.enchantAPI.v1_20_R3.enchantment.EnchantmentInjector_v1_20_R3;
+import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,14 +19,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class EnchantmentRegister implements LegacyEnchantmentInjector {
+public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
 
     // NMS Enchantment를 상속받는 커스텀 클래스
     private static class NMSCustomEnchantment extends Enchantment {
-        private final LegacyCustomEnchantment wrapper;
+        private final CustomEnchantment_v1_20_R3 wrapper;
         private final NamespacedKey key;
 
-        protected NMSCustomEnchantment(LegacyCustomEnchantment wrapper, NamespacedKey key) {
+        protected NMSCustomEnchantment(CustomEnchantment_v1_20_R3 wrapper, NamespacedKey key) {
             super(convertRarity(wrapper.getRarity()),
                     convertTarget(wrapper.getEnchantmentTarget()),
                     convertSlots(wrapper.getApplicableSlots()));
@@ -87,7 +87,7 @@ public class EnchantmentRegister implements LegacyEnchantmentInjector {
     }
 
     @Override
-    public void inject(LegacyCustomEnchantment enchantment) {
+    public void inject(CustomEnchantment_v1_20_R3 enchantment) {
         try {
             // Bukkit NamespacedKey → NMS ResourceLocation
             NamespacedKey bukkitKey = enchantment.getKey();
@@ -122,7 +122,7 @@ public class EnchantmentRegister implements LegacyEnchantmentInjector {
     /**
      * API의 Rarity Enum을 NMS의 Enchantment.Rarity Enum으로 변환합니다.
      */
-    private static Enchantment.Rarity convertRarity(Rarity rarity) {
+    private static Enchantment.Rarity convertRarity(Rarity_v1_20_R3 rarity) {
         // 이름이 동일하므로 valueOf를 통해 간단히 변환할 수 있습니다.
         return Enchantment.Rarity.valueOf(rarity.name());
     }

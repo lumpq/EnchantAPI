@@ -1,7 +1,7 @@
 package io.lumpq126.enchantAPI.nms.v1_20_R4;
 
-import io.lumpq126.enchantAPI.renew.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.renew.enchantment.EnchantmentInjector;
+import io.lumpq126.enchantAPI.v1_21_R3.enchantment.CustomEnchantment_v1_21_R3;
+import io.lumpq126.enchantAPI.v1_21_R3.enchantment.EnchantmentInjector_v1_21_R3;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -22,13 +22,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnchantmentRegister implements EnchantmentInjector {
+public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
 
     private static class NMSCustomEnchantment extends Enchantment {
-        private final CustomEnchantment wrapper;
+        private final CustomEnchantment_v1_21_R3 wrapper;
         private final NamespacedKey key;
 
-        protected NMSCustomEnchantment(CustomEnchantment wrapper, NamespacedKey key) {
+        protected NMSCustomEnchantment(CustomEnchantment_v1_21_R3 wrapper, NamespacedKey key) {
             super(new EnchantmentDefinition(
                     convertTargetToItemTag(wrapper.getEnchantmentTarget()),
                     java.util.Optional.empty(),
@@ -77,7 +77,7 @@ public class EnchantmentRegister implements EnchantmentInjector {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void inject(CustomEnchantment enchantment) {
+    public void inject(CustomEnchantment_v1_21_R3 enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
             ResourceLocation nmsId = new ResourceLocation(bukkitKey.getNamespace(), bukkitKey.getKey());

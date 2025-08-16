@@ -1,14 +1,14 @@
 package io.lumpq126.enchantAPI.nms.v1_21_R1;
 
-import io.lumpq126.enchantAPI.renew.enchantment.CustomEnchantment;
-import io.lumpq126.enchantAPI.renew.enchantment.EnchantmentInjector;
+import io.lumpq126.enchantAPI.v1_21_R3.enchantment.CustomEnchantment_v1_21_R3;
+import io.lumpq126.enchantAPI.v1_21_R3.enchantment.EnchantmentInjector_v1_21_R3;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.RegistryLayer; // ✅ 핵심: 정적 레지스트리 접근자
+import net.minecraft.server.RegistryLayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -21,10 +21,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchantmentRegister implements EnchantmentInjector {
+public class EnchantmentRegister implements EnchantmentInjector_v1_21_R3 {
 
     @Override
-    public void inject(CustomEnchantment enchantment) {
+    public void inject(CustomEnchantment_v1_21_R3 enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
 

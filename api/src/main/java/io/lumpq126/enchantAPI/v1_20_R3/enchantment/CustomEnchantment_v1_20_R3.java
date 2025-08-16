@@ -1,6 +1,6 @@
-package io.lumpq126.enchantAPI.legacy.enchantment;
+package io.lumpq126.enchantAPI.v1_20_R3.enchantment;
 
-import io.lumpq126.enchantAPI.legacy.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;
@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 레거시 커스텀 인챈트 정의 클래스 (v1_20_R3 용).
  * 단순한 속성만 제공.
  */
-public abstract class LegacyCustomEnchantment {
+public abstract class CustomEnchantment_v1_20_R3 {
     private static JavaPlugin plugin;
     protected final NamespacedKey key;
     protected final String name;
@@ -21,7 +21,7 @@ public abstract class LegacyCustomEnchantment {
     protected final boolean isCursed;
     protected final boolean canTrade;
     protected final boolean isDiscoverable;
-    protected final Rarity rarity;
+    protected final Rarity_v1_20_R3 rarity;
     protected final EnchantmentTarget enchantmentTarget;
     protected final EquipmentSlot[] applicableSlots;
     protected final int weight;
@@ -30,9 +30,9 @@ public abstract class LegacyCustomEnchantment {
         plugin = instance;
     }
 
-    public LegacyCustomEnchantment(String id, String name, int maxLevel, int anvilCost,
-                                   Rarity rarity, EnchantmentTarget enchantmentTarget, EquipmentSlot[] applicableSlots,
-                                   boolean isTreasure, boolean isCursed, boolean canTrade, boolean isDiscoverable, int weight) {
+    public CustomEnchantment_v1_20_R3(String id, String name, int maxLevel, int anvilCost,
+                                      Rarity_v1_20_R3 rarity, EnchantmentTarget enchantmentTarget, EquipmentSlot[] applicableSlots,
+                                      boolean isTreasure, boolean isCursed, boolean canTrade, boolean isDiscoverable, int weight) {
         this.key = new NamespacedKey(plugin, id);
         this.name = name;
         this.maxLevel = maxLevel;
@@ -55,7 +55,7 @@ public abstract class LegacyCustomEnchantment {
     public String getName() { return name; }
     public int getMaxLevel() { return maxLevel; }
     public int getAnvilCost() { return anvilCost; }
-    public Rarity getRarity() { return rarity; }
+    public Rarity_v1_20_R3 getRarity() { return rarity; }
     public EnchantmentTarget getEnchantmentTarget() { return enchantmentTarget; }
     public EquipmentSlot[] getApplicableSlots() { return applicableSlots; }
     public boolean isTreasure() { return isTreasure; }

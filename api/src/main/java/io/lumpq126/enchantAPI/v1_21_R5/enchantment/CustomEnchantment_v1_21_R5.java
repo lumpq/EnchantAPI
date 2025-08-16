@@ -1,8 +1,9 @@
-package io.lumpq126.enchantAPI.renew.enchantment;
+package io.lumpq126.enchantAPI.v1_21_R5.enchantment;
 
-import io.lumpq126.enchantAPI.legacy.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 커스텀 인챈트 정의 클래스.
  * NMS EnchantmentDefinition의 속성들을 전부 커스터마이징 가능하게 제공합니다.
  */
-public abstract class CustomEnchantment {
+public abstract class CustomEnchantment_v1_21_R5 {
     private static JavaPlugin plugin;
 
     protected final NamespacedKey key;
@@ -28,9 +29,9 @@ public abstract class CustomEnchantment {
     protected final boolean canTrade;
     protected final boolean isDiscoverable;
 
-    // Bukkit / API 전용 속성
-    protected final Rarity rarity;
-    protected final EnchantmentTarget enchantmentTarget;
+    // NMS 전용 속성
+    protected final Rarity_v1_20_R3 rarity;
+    protected final TagKey<Item> targetTag;
     protected final EquipmentSlot[] applicableSlots;
 
     // 비용 커스터마이징
@@ -43,22 +44,22 @@ public abstract class CustomEnchantment {
         plugin = instance;
     }
 
-    public CustomEnchantment(String id,
-                                   String name,
-                                   int maxLevel,
-                                   int anvilCost,
-                                   int weight,
-                                   Rarity rarity,
-                                   EnchantmentTarget enchantmentTarget,
-                                   EquipmentSlot[] applicableSlots,
-                                   boolean isTreasure,
-                                   boolean isCursed,
-                                   boolean canTrade,
-                                   boolean isDiscoverable,
-                                   int minCostBase,
-                                   int minCostPerLevel,
-                                   int maxCostBase,
-                                   int maxCostPerLevel) {
+    public CustomEnchantment_v1_21_R5(String id,
+                                      String name,
+                                      int maxLevel,
+                                      int anvilCost,
+                                      int weight,
+                                      Rarity_v1_20_R3 rarity,
+                                      TagKey<Item> targetTag,                  // ✅ 교체
+                                      EquipmentSlot[] applicableSlots,
+                                      boolean isTreasure,
+                                      boolean isCursed,
+                                      boolean canTrade,
+                                      boolean isDiscoverable,
+                                      int minCostBase,
+                                      int minCostPerLevel,
+                                      int maxCostBase,
+                                      int maxCostPerLevel) {
         this.key = new NamespacedKey(plugin, id);
         this.name = name;
 
@@ -67,7 +68,7 @@ public abstract class CustomEnchantment {
         this.weight = weight;
 
         this.rarity = rarity;
-        this.enchantmentTarget = enchantmentTarget;
+        this.targetTag = targetTag;
         this.applicableSlots = applicableSlots;
 
         this.isTreasure = isTreasure;
@@ -94,8 +95,8 @@ public abstract class CustomEnchantment {
     public int getAnvilCost() { return anvilCost; }
     public int getWeight() { return weight; }
 
-    public Rarity getRarity() { return rarity; }
-    public EnchantmentTarget getEnchantmentTarget() { return enchantmentTarget; }
+    public Rarity_v1_20_R3 getRarity() { return rarity; }
+    public TagKey<Item> getTargetTag() { return targetTag; }
     public EquipmentSlot[] getApplicableSlots() { return applicableSlots; }
 
     public boolean isTreasure() { return isTreasure; }

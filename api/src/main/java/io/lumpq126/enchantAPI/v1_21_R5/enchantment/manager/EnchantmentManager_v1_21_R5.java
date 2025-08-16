@@ -1,8 +1,8 @@
-package io.lumpq126.enchantAPI.legacy.enchantment.manager;
+package io.lumpq126.enchantAPI.v1_21_R5.enchantment.manager;
 
-import io.lumpq126.enchantAPI.legacy.api.LegacyEnchantAPI;
-import io.lumpq126.enchantAPI.legacy.enchantment.LegacyCustomEnchantment;
-import io.lumpq126.enchantAPI.legacy.enchantment.LegacyEnchantmentInjector;
+import io.lumpq126.enchantAPI.v1_21_R5.api.EnchantAPI_v1_21_R5;
+import io.lumpq126.enchantAPI.v1_21_R5.enchantment.CustomEnchantment_v1_21_R5;
+import io.lumpq126.enchantAPI.v1_21_R5.enchantment.EnchantmentInjector_v1_21_R5;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,29 +10,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class LegacyEnchantmentManager extends LegacyEnchantAPI {
+public class EnchantmentManager_v1_21_R5 extends EnchantAPI_v1_21_R5 {
     private final JavaPlugin plugin;
-    private final Map<NamespacedKey, LegacyCustomEnchantment> customEnchantments = new ConcurrentHashMap<>();
-    private final LegacyEnchantmentInjector injector;
+    private final Map<NamespacedKey, CustomEnchantment_v1_21_R5> customEnchantments = new ConcurrentHashMap<>();
+    private final EnchantmentInjector_v1_21_R5 injector;
 
-    public LegacyEnchantmentManager(JavaPlugin plugin) {
+    public EnchantmentManager_v1_21_R5(JavaPlugin plugin) {
         this.plugin = plugin;
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             Class<?> injectorClass = Class.forName("io.lumpq126.enchantAPI.nms." + version + ".EnchantmentRegister");
-            this.injector = (LegacyEnchantmentInjector) injectorClass.getDeclaredConstructor().newInstance();
+            this.injector = (EnchantmentInjector_v1_21_R5) injectorClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("NMS 모듈을 로드할 수 없습니다: " + version, e);
         }
     }
 
     @Override
-    public void registerEnchantment(LegacyCustomEnchantment enchantment) {
+    public void registerEnchantment(CustomEnchantment_v1_21_R5 enchantment) {
         customEnchantments.put(enchantment.getKey(), enchantment);
     }
 
     public void loadInjectedEnchantments() {
-        for (LegacyCustomEnchantment enchantment : customEnchantments.values()) {
+        for (CustomEnchantment_v1_21_R5 enchantment : customEnchantments.values()) {
             injector.inject(enchantment);
             plugin.getLogger().info("'" + enchantment.getName() + "' 인챈트가 성공적으로 주입되었습니다.");
         }
@@ -40,14 +40,14 @@ public class LegacyEnchantmentManager extends LegacyEnchantAPI {
 
     // 추가된 메서드
     public void onEnchant(ItemStack item, NamespacedKey key, int level) {
-        LegacyCustomEnchantment enchantment = customEnchantments.get(key);
+        CustomEnchantment_v1_21_R5 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
             enchantment.onEnchant(item, level);
         }
     }
 
     public void onUnenchant(ItemStack item, NamespacedKey key) {
-        LegacyCustomEnchantment enchantment = customEnchantments.get(key);
+        CustomEnchantment_v1_21_R5 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
             enchantment.onUnenchant(item);
         }
