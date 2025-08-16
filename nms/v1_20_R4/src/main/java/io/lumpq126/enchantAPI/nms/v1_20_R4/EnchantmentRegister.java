@@ -1,8 +1,8 @@
 package io.lumpq126.enchantAPI.nms.v1_20_R4;
 
+import io.lumpq126.enchantAPI.utilities.Log;
 import io.lumpq126.enchantAPI.v1_21_R3.enchantment.CustomEnchantment_v1_21_R3;
 import io.lumpq126.enchantAPI.v1_21_R3.enchantment.EnchantmentInjector_v1_21_R3;
-import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;

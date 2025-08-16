@@ -1,9 +1,9 @@
 package io.lumpq126.enchantAPI;
 
+import io.lumpq126.enchantAPI.utilities.Log;
 import io.lumpq126.enchantAPI.v1_20_R3.api.EnchantAPI_v1_20_R3;
 import io.lumpq126.enchantAPI.v1_20_R3.enchantment.CustomEnchantment_v1_20_R3;
 import io.lumpq126.enchantAPI.v1_20_R3.enchantment.manager.EnchantmentManager_v1_20_R3;
-import io.lumpq126.enchantAPI.utilities.Log;
 import io.lumpq126.enchantAPI.v1_21_R3.api.EnchantAPI_v1_21_R3;
 import io.lumpq126.enchantAPI.v1_21_R3.enchantment.CustomEnchantment_v1_21_R3;
 import io.lumpq126.enchantAPI.v1_21_R3.enchantment.manager.EnchantmentManager_v1_21_R3;

@@ -1,6 +1,5 @@
 package io.lumpq126.enchantAPI.v1_21_R5.enchantment;
 
-import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
