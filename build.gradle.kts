@@ -74,7 +74,7 @@ tasks {
         exclude("META-INF/*.RSA")
         exclude("module-info.class")
 
-        relocate("org.bstats", "io.lumpq.shadowed.bstats")
+        relocate("org.bstats", "io.lumpq126.shadowed.bstats")
     }
 
     build {
@@ -93,6 +93,6 @@ tasks.register<Copy>("copyJarToServer") {
     dependsOn(tasks.shadowJar)
     from(tasks.shadowJar.get().archiveFile)
     into(serverPluginsDir)
-    rename { "Eclipsia-$pluginVersion.jar" }
+    rename { "EnchantAPI-$pluginVersion.jar" }
 }
 tasks.build { dependsOn("copyJarToServer") }
