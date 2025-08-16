@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
-public class EnchantAPIPlugin extends JavaPlugin {
+public final class EnchantAPIPlugin extends JavaPlugin {
     private static NMSHandler nms;
 
     @Override
