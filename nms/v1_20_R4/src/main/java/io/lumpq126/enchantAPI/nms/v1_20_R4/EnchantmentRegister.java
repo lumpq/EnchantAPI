@@ -125,5 +125,4 @@ public class EnchantmentRegister implements EnchantmentInjector {
             default -> ItemTags.VANISHING_ENCHANTABLE;
         };
     }
-
 }
