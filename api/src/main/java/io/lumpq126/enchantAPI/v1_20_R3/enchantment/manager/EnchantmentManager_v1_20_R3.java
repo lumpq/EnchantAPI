@@ -39,17 +39,17 @@ public class EnchantmentManager_v1_20_R3 extends EnchantAPI_v1_20_R3 {
     }
 
     // 추가된 메서드
-    public void onEnchant(ItemStack item, NamespacedKey key, int level) {
+    public void addEnchant(ItemStack item, NamespacedKey key, int level) {
         CustomEnchantment_v1_20_R3 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
-            enchantment.onEnchant(item, level);
+            enchantment.addEnchant(item, level);
         }
     }
 
-    public void onUnenchant(ItemStack item, NamespacedKey key) {
+    public void removeEnchant(ItemStack item, NamespacedKey key) {
         CustomEnchantment_v1_20_R3 enchantment = customEnchantments.get(key);
         if (enchantment != null) {
-            enchantment.onUnenchant(item);
+            enchantment.removeEnchant(item);
         }
     }
 }

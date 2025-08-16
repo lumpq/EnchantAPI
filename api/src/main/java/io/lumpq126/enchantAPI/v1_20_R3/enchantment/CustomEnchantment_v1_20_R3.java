@@ -47,8 +47,8 @@ public abstract class CustomEnchantment_v1_20_R3 {
         this.weight = weight;
     }
 
-    public abstract void onEnchant(ItemStack item, int level);
-    public abstract void onUnenchant(ItemStack item);
+    public abstract void addEnchant(ItemStack item, int level);
+    public abstract void removeEnchant(ItemStack item);
     public abstract boolean canEnchant(ItemStack item);
 
     public NamespacedKey getKey() { return key; }

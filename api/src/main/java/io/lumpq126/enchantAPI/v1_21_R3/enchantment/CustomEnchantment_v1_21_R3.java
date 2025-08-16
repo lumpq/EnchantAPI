@@ -78,8 +78,8 @@ public abstract class CustomEnchantment_v1_21_R3 {
     }
 
     // 추상 메서드 (각 엔챈트마다 구현)
-    public abstract void onEnchant(ItemStack item, int level);
-    public abstract void onUnenchant(ItemStack item);
+    public abstract void addEnchant(ItemStack item, int level);
+    public abstract void removeEnchant(ItemStack item);
     public abstract boolean canEnchant(ItemStack item);
 
     // 게터들
