@@ -1,6 +1,9 @@
 package io.lumpq126.enchantAPI.enchantment;
 
+import io.lumpq126.enchantAPI.enchantment.properties.Rarity;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,23 +16,29 @@ public abstract class CustomEnchantment {
     protected final boolean isTreasure;
     protected final boolean isCursed;
     protected final boolean canTrade;
-    protected final boolean isDiscoverable; // 추가됨
+    protected final boolean isDiscoverable;
+    protected final Rarity rarity;
+    protected final EnchantmentTarget enchantmentTarget;
+    protected final EquipmentSlot[] applicableSlots;
 
     public static void init(JavaPlugin instance) {
         plugin = instance;
     }
 
-    public CustomEnchantment(String id, String name,
-                             int maxLevel, int anvilCost,
+    public CustomEnchantment(String id, String name, int maxLevel, int anvilCost,
+                             Rarity rarity, EnchantmentTarget enchantmentTarget, EquipmentSlot[] applicableSlots,
                              boolean isTreasure, boolean isCursed, boolean canTrade, boolean isDiscoverable) {
         this.key = new NamespacedKey(plugin, id);
         this.name = name;
         this.maxLevel = maxLevel;
         this.anvilCost = anvilCost;
+        this.rarity = rarity;
+        this.enchantmentTarget = enchantmentTarget;
+        this.applicableSlots = applicableSlots;
         this.isTreasure = isTreasure;
         this.isCursed = isCursed;
         this.canTrade = canTrade;
-        this.isDiscoverable = isDiscoverable; // 추가됨
+        this.isDiscoverable = isDiscoverable;
     }
 
     public abstract void onEnchant(ItemStack item, int level);
@@ -50,6 +59,18 @@ public abstract class CustomEnchantment {
 
     public int getAnvilCost() {
         return anvilCost;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
+
+    public EnchantmentTarget getEnchantmentTarget() {
+        return enchantmentTarget;
+    }
+
+    public EquipmentSlot[] getApplicableSlots() {
+        return applicableSlots;
     }
 
     public boolean isTreasure() {

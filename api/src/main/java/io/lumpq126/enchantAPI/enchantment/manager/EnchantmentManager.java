@@ -1,23 +1,24 @@
-package io.lumpq126.enchantAPI.utilities.manager;
+package io.lumpq126.enchantAPI.enchantment.manager;
 
 import io.lumpq126.enchantAPI.api.EnchantAPI;
 import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
 import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 public class EnchantmentManager extends EnchantAPI {
     private final JavaPlugin plugin;
-    private final Set<CustomEnchantment> customEnchantments = new HashSet<>();
+    private final Map<NamespacedKey, CustomEnchantment> customEnchantments = new ConcurrentHashMap<>();
     private final EnchantmentInjector injector;
 
     public EnchantmentManager(JavaPlugin plugin) {
         this.plugin = plugin;
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
-            // NMS 버전별 EnchantmentInjector 클래스 동적 로딩
             Class<?> injectorClass = Class.forName("io.lumpq126.enchantAPI.nms." + version + ".EnchantmentRegister");
             this.injector = (EnchantmentInjector) injectorClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -27,14 +28,28 @@ public class EnchantmentManager extends EnchantAPI {
 
     @Override
     public void registerEnchantment(CustomEnchantment enchantment) {
-        // 실제로 NMS 인젝션을 수행할 목록에 추가
-        customEnchantments.add(enchantment);
+        customEnchantments.put(enchantment.getKey(), enchantment);
     }
 
     public void loadInjectedEnchantments() {
-        for (CustomEnchantment enchantment : customEnchantments) {
+        for (CustomEnchantment enchantment : customEnchantments.values()) {
             injector.inject(enchantment);
             plugin.getLogger().info("'" + enchantment.getName() + "' 인챈트가 성공적으로 주입되었습니다.");
+        }
+    }
+
+    // 추가된 메서드
+    public void onEnchant(ItemStack item, NamespacedKey key, int level) {
+        CustomEnchantment enchantment = customEnchantments.get(key);
+        if (enchantment != null) {
+            enchantment.onEnchant(item, level);
+        }
+    }
+
+    public void onUnenchant(ItemStack item, NamespacedKey key) {
+        CustomEnchantment enchantment = customEnchantments.get(key);
+        if (enchantment != null) {
+            enchantment.onUnenchant(item);
         }
     }
 }

@@ -2,6 +2,7 @@ package io.lumpq126.enchantAPI.nms.v1_18_R2;
 
 import io.lumpq126.enchantAPI.enchantment.CustomEnchantment;
 import io.lumpq126.enchantAPI.enchantment.EnchantmentInjector;
+import io.lumpq126.enchantAPI.enchantment.properties.Rarity;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -11,9 +12,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 public class EnchantmentRegister implements EnchantmentInjector {
 
@@ -22,7 +26,9 @@ public class EnchantmentRegister implements EnchantmentInjector {
         private final NamespacedKey key;
 
         protected NMSCustomEnchantment(CustomEnchantment wrapper, NamespacedKey key) {
-            super(Enchantment.Rarity.COMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+            super(convertRarity(wrapper.getRarity()),
+                    convertTarget(wrapper.getEnchantmentTarget()),
+                    convertSlots(wrapper.getApplicableSlots()));
             this.wrapper = wrapper;
             this.key = key;
         }
@@ -97,5 +103,49 @@ public class EnchantmentRegister implements EnchantmentInjector {
             JavaPlugin.getProvidingPlugin(this.getClass()).getLogger().severe("Failed to inject custom enchantment: " + enchantment.getKey().getKey());
             Log.log("error", "Failed to inject custom enchantment.", e);
         }
+    }
+
+    /**
+     * API의 Rarity Enum을 NMS의 Enchantment.Rarity Enum으로 변환합니다.
+     */
+    private static Enchantment.Rarity convertRarity(Rarity rarity) {
+        // 이름이 동일하므로 valueOf를 통해 간단히 변환할 수 있습니다.
+        return Enchantment.Rarity.valueOf(rarity.name());
+    }
+
+    /**
+     * Bukkit의 EnchantmentTarget Enum을 NMS의 EnchantmentCategory Enum으로 변환합니다.
+     */
+    private static EnchantmentCategory convertTarget(EnchantmentTarget target) {
+        // Bukkit과 NMS의 Enum 이름이 일부 다르므로 switch문으로 직접 매핑합니다.
+        return switch (target) {
+            case ALL -> EnchantmentCategory.BREAKABLE;
+            case ARMOR -> EnchantmentCategory.ARMOR;
+            case ARMOR_FEET -> EnchantmentCategory.ARMOR_FEET;
+            case ARMOR_LEGS -> EnchantmentCategory.ARMOR_LEGS;
+            case ARMOR_HEAD -> EnchantmentCategory.ARMOR_HEAD;
+            case ARMOR_TORSO -> EnchantmentCategory.ARMOR_CHEST;
+            case WEAPON -> EnchantmentCategory.WEAPON;
+            case TOOL -> EnchantmentCategory.DIGGER;
+            case BOW -> EnchantmentCategory.BOW;
+            case FISHING_ROD -> EnchantmentCategory.FISHING_ROD;
+            case TRIDENT -> EnchantmentCategory.TRIDENT;
+            case BREAKABLE -> EnchantmentCategory.BREAKABLE;
+            case WEARABLE -> EnchantmentCategory.WEARABLE;
+            case CROSSBOW -> EnchantmentCategory.CROSSBOW;
+            case VANISHABLE -> EnchantmentCategory.VANISHABLE;
+        };
+    }
+
+    /**
+     * Bukkit의 EquipmentSlot 배열을 NMS의 EquipmentSlot 배열로 변환합니다.
+     */
+    private static EquipmentSlot[] convertSlots(org.bukkit.inventory.EquipmentSlot[] slots) {
+        if (slots == null) {
+            return new EquipmentSlot[0];
+        }
+        return Arrays.stream(slots)
+                .map(slot -> EquipmentSlot.valueOf(slot.name()))
+                .toArray(EquipmentSlot[]::new);
     }
 }
