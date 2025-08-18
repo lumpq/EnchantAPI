@@ -2,23 +2,49 @@ package io.lumpq126.enchantAPI.api;
 
 import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
 
+/**
+ * The central API access point for the custom enchantment system.
+ * <p>
+ * Provides methods for registering custom enchantments.
+ * An {@link EnchantmentManager} instance should set itself
+ * as the active API provider during plugin load.
+ */
 public class EnchantAPI {
     private static EnchantAPI instance;
 
+    /**
+     * Returns the current API instance.
+     *
+     * @return the API instance, or {@code null} if the plugin
+     *         has not been initialized
+     */
     public static EnchantAPI getInstance() {
         if (instance == null) {
-            // 이 플러그인이 로드되지 않았을 경우 null 반환
+            // Returns null if the plugin has not been loaded
             return null;
         }
         return instance;
     }
 
+    /**
+     * Sets the active API instance.
+     * <p>
+     * Should only be called by {@link EnchantmentManager}.
+     *
+     * @param api the API instance
+     */
     public static void setInstance(EnchantAPI api) {
         instance = api;
     }
 
+    /**
+     * Registers a custom enchantment.
+     * <p>
+     * The actual behavior is implemented in {@link EnchantmentManager}.
+     *
+     * @param enchantment the enchantment to register
+     */
     public void registerEnchantment(CustomEnchantment enchantment) {
-        // 이 메소드는 EnchantmentManager에서 구현됩니다.
-        // 다른 플러그인이 이를 호출하여 인챈트를 등록합니다.
+        // Implemented in EnchantmentManager
     }
 }

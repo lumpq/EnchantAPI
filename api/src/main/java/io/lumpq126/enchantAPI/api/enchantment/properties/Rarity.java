@@ -1,12 +1,21 @@
 package io.lumpq126.enchantAPI.api.enchantment.properties;
 
 /**
- * 커스텀 인챈트의 희귀도를 나타냅니다.
- * 이 값은 인챈트 테이블이나 전리품 상자에서의 등장 확률에 영향을 줍니다.
+ * Represents the rarity of a custom enchantment.
+ * <p>
+ * This value determines how frequently an enchantment appears
+ * in the enchantment table or loot tables.
  */
 public enum Rarity {
+    /** Common enchantment, appears frequently. */
     COMMON,
+
+    /** Uncommon enchantment, appears less often than common ones. */
     UNCOMMON,
+
+    /** Rare enchantment, appears infrequently. */
     RARE,
+
+    /** Very rare enchantment, appears extremely rarely. */
     VERY_RARE;
 }
