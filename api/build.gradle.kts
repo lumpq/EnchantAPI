@@ -18,12 +18,9 @@ publishing {
             groupId = "io.lumpq126"
             artifactId = "enchantapi"
             version = "1.0.0"
-            // `api` 모듈의 java 컴포넌트를 사용합니다.
             from(components["java"])
         }
     }
-    // 이 repositories 블록은 로컬 배포에서는 필요하지 않습니다.
-    // 원격 GitHub Packages 배포 시에만 사용하세요.
     repositories {
         mavenLocal()
     }
@@ -31,4 +28,16 @@ publishing {
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    // javadoc.jar, sources.jar 같이 생성되도록 설정
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// javadoc 태스크 커스터마이징 (옵션)
+tasks.javadoc {
+    isFailOnError = false // 경고 때문에 빌드 실패하지 않게
+    options.encoding = "UTF-8"
+    (options as StandardJavadocDocletOptions).apply {
+        addStringOption("Xdoclint:none", "-quiet")
+    }
 }
