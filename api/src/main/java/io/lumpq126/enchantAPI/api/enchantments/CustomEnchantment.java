@@ -1,6 +1,6 @@
-package io.lumpq126.enchantAPI.api.enchantment;
+package io.lumpq126.enchantAPI.api.enchantments;
 
-import io.lumpq126.enchantAPI.api.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.api.enchantments.properties.Rarity;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;

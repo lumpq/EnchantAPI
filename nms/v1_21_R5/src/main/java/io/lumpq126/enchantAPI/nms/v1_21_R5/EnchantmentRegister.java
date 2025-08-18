@@ -1,7 +1,7 @@
 package io.lumpq126.enchantAPI.nms.v1_21_R5;
 
 import io.lumpq126.enchantAPI.api.CustomEnchantmentInjector;
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
 import io.lumpq126.enchantAPI.utilities.Log;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;

@@ -1,4 +1,4 @@
-package io.lumpq126.enchantAPI.api.enchantment.properties;
+package io.lumpq126.enchantAPI.api.enchantments.properties;
 
 /**
  * Represents the rarity of a custom enchantment.

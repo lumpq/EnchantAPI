@@ -1,6 +1,6 @@
 package io.lumpq126.enchantAPI.api;
 
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
 
 /**
  * Handles the low-level injection of a {@link CustomEnchantment}

@@ -1,6 +1,7 @@
 package io.lumpq126.enchantAPI.api;
 
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.manager.EnchantmentManager;
 
 /**
  * The central API access point for the custom enchantment system.

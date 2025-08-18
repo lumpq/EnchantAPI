@@ -1,8 +1,8 @@
 package io.lumpq126.enchantAPI;
 
 import io.lumpq126.enchantAPI.api.EnchantAPI;
-import io.lumpq126.enchantAPI.api.EnchantmentManager;
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.manager.EnchantmentManager;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
 import io.lumpq126.enchantAPI.utilities.Log;
 import org.bukkit.plugin.java.JavaPlugin;
 

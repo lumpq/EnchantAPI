@@ -1,9 +1,9 @@
 package io.lumpq126.enchantAPI.nms.v1_19_R1;
 
 import io.lumpq126.enchantAPI.api.CustomEnchantmentInjector;
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
 import io.lumpq126.enchantAPI.utilities.Log;
-import io.lumpq126.enchantAPI.api.enchantment.properties.Rarity;
+import io.lumpq126.enchantAPI.api.enchantments.properties.Rarity;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;

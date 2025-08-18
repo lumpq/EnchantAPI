@@ -1,6 +1,8 @@
-package io.lumpq126.enchantAPI.api;
+package io.lumpq126.enchantAPI.api.enchantments.manager;
 
-import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
+import io.lumpq126.enchantAPI.api.CustomEnchantmentInjector;
+import io.lumpq126.enchantAPI.api.EnchantAPI;
+import io.lumpq126.enchantAPI.api.enchantments.CustomEnchantment;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
