@@ -1,9 +1,9 @@
 package io.lumpq126.enchantAPI.nms.v1_18_R1;
 
+import io.lumpq126.enchantAPI.api.CustomEnchantmentInjector;
+import io.lumpq126.enchantAPI.api.enchantment.CustomEnchantment;
 import io.lumpq126.enchantAPI.utilities.Log;
-import io.lumpq126.enchantAPI.v1_20_R3.enchantment.CustomEnchantment_v1_20_R3;
-import io.lumpq126.enchantAPI.v1_20_R3.enchantment.EnchantmentInjector_v1_20_R3;
-import io.lumpq126.enchantAPI.v1_20_R3.enchantment.properties.Rarity_v1_20_R3;
+import io.lumpq126.enchantAPI.api.enchantment.properties.Rarity;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,13 +19,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
+public class EnchantmentRegister implements CustomEnchantmentInjector {
 
     private static class NMSCustomEnchantment extends Enchantment {
-        private final CustomEnchantment_v1_20_R3 wrapper;
+        private final CustomEnchantment wrapper;
         private final NamespacedKey key;
 
-        protected NMSCustomEnchantment(CustomEnchantment_v1_20_R3 wrapper, NamespacedKey key) {
+        protected NMSCustomEnchantment(CustomEnchantment wrapper, NamespacedKey key) {
             super(convertRarity(wrapper.getRarity()),
                     convertTarget(wrapper.getEnchantmentTarget()),
                     convertSlots(wrapper.getApplicableSlots()));
@@ -85,7 +85,7 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
     }
 
     @Override
-    public void inject(CustomEnchantment_v1_20_R3 enchantment) {
+    public void inject(CustomEnchantment enchantment) {
         try {
             NamespacedKey bukkitKey = enchantment.getKey();
             ResourceLocation nmsId = new ResourceLocation(bukkitKey.getNamespace(), bukkitKey.getKey());
@@ -108,7 +108,7 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
     /**
      * API의 Rarity Enum을 NMS의 Enchantment.Rarity Enum으로 변환합니다.
      */
-    private static Enchantment.Rarity convertRarity(Rarity_v1_20_R3 rarity) {
+    private static Enchantment.Rarity convertRarity(Rarity rarity) {
         // 이름이 동일하므로 valueOf를 통해 간단히 변환할 수 있습니다.
         return Enchantment.Rarity.valueOf(rarity.name());
     }
@@ -119,7 +119,7 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
     private static EnchantmentCategory convertTarget(EnchantmentTarget target) {
         // Bukkit과 NMS의 Enum 이름이 일부 다르므로 switch문으로 직접 매핑합니다.
         return switch (target) {
-            case ALL -> EnchantmentCategory.BREAKABLE;
+            case ALL, BREAKABLE -> EnchantmentCategory.BREAKABLE;
             case ARMOR -> EnchantmentCategory.ARMOR;
             case ARMOR_FEET -> EnchantmentCategory.ARMOR_FEET;
             case ARMOR_LEGS -> EnchantmentCategory.ARMOR_LEGS;
@@ -130,7 +130,6 @@ public class EnchantmentRegister implements EnchantmentInjector_v1_20_R3 {
             case BOW -> EnchantmentCategory.BOW;
             case FISHING_ROD -> EnchantmentCategory.FISHING_ROD;
             case TRIDENT -> EnchantmentCategory.TRIDENT;
-            case BREAKABLE -> EnchantmentCategory.BREAKABLE;
             case WEARABLE -> EnchantmentCategory.WEARABLE;
             case CROSSBOW -> EnchantmentCategory.CROSSBOW;
             case VANISHABLE -> EnchantmentCategory.VANISHABLE;
