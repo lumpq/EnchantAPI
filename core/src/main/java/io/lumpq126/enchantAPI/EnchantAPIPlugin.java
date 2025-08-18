@@ -18,7 +18,7 @@ public final class EnchantAPIPlugin extends JavaPlugin {
         // 1. CustomEnchantment 초기화
         CustomEnchantment.init(this);
 
-        // 2. =EnchantmentManager 생성 + 싱글톤 등록
+        // 2. EnchantmentManager 생성 + 싱글톤 등록
         EnchantmentManager manager = new EnchantmentManager(this);
         EnchantAPI.setInstance(manager);
 
