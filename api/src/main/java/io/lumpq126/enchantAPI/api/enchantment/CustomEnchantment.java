@@ -2,14 +2,10 @@ package io.lumpq126.enchantAPI.api.enchantment;
 
 import io.lumpq126.enchantAPI.api.enchantment.properties.Rarity;
 import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class CustomEnchantment {
     private static JavaPlugin plugin;
