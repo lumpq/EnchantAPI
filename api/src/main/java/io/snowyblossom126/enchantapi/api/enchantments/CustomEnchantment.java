@@ -2,6 +2,7 @@ package io.snowyblossom126.enchantapi.api.enchantments;
 
 import io.snowyblossom126.enchantapi.api.enchantments.properties.Rarity;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -301,6 +302,8 @@ public abstract class CustomEnchantment {
      * @return true if applicable
      */
     public abstract boolean canEnchant(ItemStack item);
+
+    public abstract Enchantment parseToBukkitEnchantment();
 
     // ───────────── Getters ─────────────
 
