@@ -5,7 +5,7 @@ plugins {
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.18" apply false
 }
 
-group = "io.snowyblossom126"
+group = "com.github.snowyblossom126"
 version = "1.0.0"
 
 val pluginVersion = project.version.toString()
