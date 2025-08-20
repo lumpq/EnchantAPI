@@ -12,20 +12,6 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "io.lumpq126"
-            artifactId = "enchantapi"
-            version = "1.0.0"
-            from(components["java"])
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}
-
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     // javadoc.jar, sources.jar 같이 생성되도록 설정

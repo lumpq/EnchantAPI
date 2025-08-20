@@ -5,7 +5,7 @@ plugins {
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.18" apply false
 }
 
-group = "io.lumpq126"
+group = "io.snowyblossom126"
 version = "1.0.0"
 
 val pluginVersion = project.version.toString()
@@ -74,7 +74,7 @@ tasks {
         exclude("META-INF/*.RSA")
         exclude("module-info.class")
 
-        relocate("org.bstats", "io.lumpq126.shadowed.bstats")
+        relocate("org.bstats", "io.snowyblossom126.shadowed.bstats")
     }
 
     build {
