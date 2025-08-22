@@ -1,8 +1,14 @@
+import org.gradle.external.javadoc.StandardJavadocDocletOptions
+
 plugins {
-    id("java")
-    id("io.github.goooler.shadow") version "8.1.8"
+    `java-library`
     `maven-publish`
+    signing
+    id("com.vanniktech.maven.publish") version "0.34.0"
 }
+
+group = "io.github.snowyblossom126"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -13,17 +19,60 @@ dependencies {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-    // javadoc.jar, sources.jar 같이 생성되도록 설정
-    withJavadocJar()
-    withSourcesJar()
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+    // withSourcesJar() 제거
+    // withJavadocJar() 제거
 }
 
-// javadoc 태스크 커스터마이징 (옵션)
-tasks.javadoc {
-    isFailOnError = false // 경고 때문에 빌드 실패하지 않게
+// Javadoc 설정
+tasks.withType<Javadoc> {
+    isFailOnError = false
     options.encoding = "UTF-8"
-    (options as StandardJavadocDocletOptions).apply {
-        addStringOption("Xdoclint:none", "-quiet")
+    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+// Gradle 8+ JavadocJar 의존성 문제 해결
+afterEvaluate {
+    tasks.named("generateMetadataFileForMavenPublication") {
+        dependsOn(tasks.named("plainJavadocJar"))
     }
+}
+
+// Vanniktech Maven Publish 설정
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications() // GPG 2.x 시스템 GPG 사용
+    coordinates("io.github.snowyblossom126", "enchantapi", version.toString())
+
+    pom {
+        name.set("EnchantAPI")
+        description.set("EnchantAPI is a library that provides API support for Minecraft plugins.")
+        url.set("https://github.com/snowyblossom126/EnchantAPI")
+
+        licenses {
+            license {
+                name.set("Apache-2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("snowyblossom126")
+                name.set("SnowyBlossom126")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/snowyblossom126/EnchantAPI")
+            connection.set("scm:git:https://github.com/snowyblossom126/EnchantAPI.git")
+        }
+    }
+}
+
+// GPG 2.x 시스템 GPG 사용
+signing {
+    useGpgCmd()
 }
