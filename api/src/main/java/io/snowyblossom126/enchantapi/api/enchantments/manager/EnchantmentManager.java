@@ -72,14 +72,14 @@ public class EnchantmentManager extends EnchantAPI {
     /**
      * Adds a custom enchantment to an item.
      *
-     * @param item  the item to modify
-     * @param key   the enchantment key
+     * @param item the item to modify
+     * @param enchantment the enchantment key
      * @param level the enchantment level
      */
-    public static void addEnchant(ItemStack item, NamespacedKey key, int level) {
+    public static void addEnchant(ItemStack item, CustomEnchantment enchantment, int level) {
         item.editMeta(meta -> {
             PersistentDataContainer container = meta.getPersistentDataContainer();
-            container.set(key, PersistentDataType.INTEGER, level);
+            container.set(enchantment.getKey(), PersistentDataType.INTEGER, level);
         });
     }
 
@@ -87,11 +87,11 @@ public class EnchantmentManager extends EnchantAPI {
      * Removes a custom enchantment from an item.
      *
      * @param item the item to modify
-     * @param key  the enchantment key
+     * @param enchantment  the enchantment key
      */
-    public static void removeEnchant(ItemStack item, NamespacedKey key) {
+    public static void removeEnchant(ItemStack item, CustomEnchantment enchantment) {
         item.editMeta(meta -> {
-            meta.getPersistentDataContainer().remove(key);
+            meta.getPersistentDataContainer().remove(enchantment.getKey());
         });
     }
 
@@ -99,13 +99,13 @@ public class EnchantmentManager extends EnchantAPI {
      * Gets the level of a custom enchantment on an item.
      *
      * @param item the item
-     * @param key  the enchantment key
+     * @param enchantment  the enchantment key
      * @return the enchantment level, or 0 if not present
      */
-    public static int getEnchantLevel(ItemStack item, NamespacedKey key) {
+    public static int getEnchantLevel(ItemStack item, CustomEnchantment enchantment) {
         if (!item.hasItemMeta()) return 0;
         PersistentDataContainer container = Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer();
-        Integer level = container.get(key, PersistentDataType.INTEGER);
+        Integer level = container.get(enchantment.getKey(), PersistentDataType.INTEGER);
         return level != null ? level : 0;
     }
 
