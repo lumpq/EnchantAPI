@@ -280,27 +280,6 @@ public abstract class CustomEnchantment {
 
     // ───────────── Abstract API ─────────────
 
-    /**
-     * Applies this enchantment to the given item.
-     *
-     * @param item  the item
-     * @param level the level to apply
-     */
-    public abstract void addEnchant(ItemStack item, int level);
-
-    /**
-     * Removes this enchantment from the given item.
-     *
-     * @param item the item
-     */
-    public abstract void removeEnchant(ItemStack item);
-
-    /**
-     * Checks whether this enchantment can be applied to the given item.
-     *
-     * @param item the item
-     * @return true if applicable
-     */
     public abstract boolean canEnchant(ItemStack item);
 
     public abstract Enchantment parseToBukkitEnchantment();
