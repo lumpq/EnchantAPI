@@ -79,10 +79,7 @@ tasks {
 
     build {
         dependsOn(shadowJar)
-    }
-
-    jar {
-        enabled = false
+        finalizedBy("copyJarToServer")
     }
 
     compileJava.get().dependsOn(clean)
@@ -95,4 +92,3 @@ tasks.register<Copy>("copyJarToServer") {
     into(serverPluginsDir)
     rename { "EnchantAPI-$pluginVersion.jar" }
 }
-tasks.build { dependsOn("copyJarToServer") }

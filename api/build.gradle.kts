@@ -24,7 +24,6 @@ java {
     }
 }
 
-// Javadoc 설정
 tasks.withType<Javadoc> {
     isFailOnError = false
     options.encoding = "UTF-8"
